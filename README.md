@@ -1,15 +1,40 @@
-# Home-Sales
+# PySpark Home Sales Data Analysis
 
-# Analysis of Bike-Sharing Trends in Q1 2024 
+## Overview
 
-## Overview This analysis examines bike-sharing patterns in our city from January to March 2024. We'll explore popular stations, rider behaviors, and differences between member and casual riders. 
+This project involves analyzing a home sales dataset using PySpark and SparkSQL. The analysis includes querying the dataset to extract meaningful insights, such as average home prices based on various criteria, and optimizing query performance through caching and partitioning techniques.
 
-## Key Findings 
-### Popular Stations Remain Consistent Our map visualization reveals that the most frequented stations for both starting and ending rides remain largely unchanged over time. This consistency suggests that certain areas in the city have sustained popularity, possibly due to their proximity to key destinations or transport hubs. 
+## Features
 
-### Popular Routes Mirror Popular Stations The "Popular Statistics Board" dashboard demonstrates that the most common routes closely correspond to the most popular starting and ending stations. This indicates that many riders are traveling between these high-traffic areas, which could inform decisions about bike availability and infrastructure improvements. 
+- **DataFrame Creation:** A Spark DataFrame is created from the dataset for efficient data processing.
+- **Temporary Tables:** Temporary tables are generated from the DataFrame for SQL querying.
+- **SQL Queries:**
+  - **Average Price by Year for Four-Bedroom Homes:** Retrieves the average price of four-bedroom homes sold each year, rounded to two decimal places.
+  - **Average Price by Year for Three-Bedroom, Three-Bathroom Homes:** Computes the average price of homes with three bedrooms and three bathrooms, categorized by the year they were built.
+  - **Average Price by Size:** Returns the average price of homes with three bedrooms, three bathrooms, two floors, and a size of at least 2,000 square feet, categorized by the year they were built.
+  - **Average Price by View Rating:** Extracts the average home price for different "view" ratings, limited to homes with an average price of $350,000 or more.
+- **Query Optimization:**
+  - **Caching:** Caches the temporary "home_sales" table to optimize query performance.
+  - **Run Time Comparison:** Compares query run times before and after caching the temporary table.
+  - **Partitioning:** Partitions the dataset by the "date_built" field and reads it in a Parquet format to optimize storage and querying.
+  - **Performance Testing:** Runs queries on both the cached and partitioned datasets to compare performance improvements.
 
-### Membership Trends and Ride Duration The "Member vs. Casual Analysis" dashboard provides several insights: 
-* Both member and casual rides have increased from January to March, suggesting growing overall usage of the bike-sharing system.
-* Member rides constitute a significant majority (82.34%) of all rides.
-* Interestingly, while members make more frequent trips, casual riders tend to use the bikes for longer durations. The average ride time for a casual rider is 814 seconds, almost double the average member ride time of 436 seconds. ### Peak Usage Times The "What are the busiest times of the week?" sheet reveals clear patterns in weekly usage: - Weekdays see peak activity during typical commute hours: 6-8 AM and 5-6 PM. - This pattern suggests that many riders are using the bike-sharing system for their daily commute to and from work. ### Seasonal Trends The "Daily Activity by Membership Type" sheet shows the number of rides per day for both members and casual riders from January to March. Notably, both groups exhibit similar trends over this period, indicating that factors affecting ridership (such as weather or events) impact both member and casual riders similarly. ## Conclusion Our analysis reveals a bike-sharing system with a strong commuter base, as evidenced by the weekday peak usage times and the high proportion of member rides. However, the system also caters to casual riders who, while fewer in number, tend to take longer trips. The consistent popularity of certain stations and routes provides valuable information for system optimization and expansion planning. As we move forward, it would be interesting to explore how these trends change in different seasons and to investigate the factors contributing to the longer ride times of casual users.
+## Technical Details
+
+- **Data Source:** [Home sales dataset](https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.2/22-big-data/home_sales_revised.csv)  containing information on various properties, including their prices, sizes, and features.
+- **Tools:**
+  - **PySpark** for data processing and analysis
+  - **SparkSQL** for writing SQL queries
+  - **Parquet** for optimized data storage and retrieval
+- **Performance Metrics:**
+  - **Caching:** Used to reduce the query run time by storing intermediate data.
+  - **Partitioning:** Used to improve data access and query performance based on the "date_built" field.
+
+## How to Use
+
+1. **Set Up PySpark:** Ensure that PySpark is installed and properly configured on your system.
+2. **Load the Dataset:** Load the home sales dataset into a Spark DataFrame.
+3. **Run the Project:**
+   - Execute the SQL queries to analyze the home sales data.
+   - Compare the query run times before and after caching and partitioning.
+   - Use the insights gained from the analysis for further decision-making or reporting.
